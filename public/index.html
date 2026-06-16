@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PAC Generator</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-title">
+      <span class="logo">PAC</span>
+      <span>Proxy Auto-Configuration Generator</span>
+    </div>
+  </div>
+
+  <!-- Main Layout -->
+  <div class="main">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">Proxy Endpoint</div>
+        <div class="field-label">Type</div>
+        <select id="proxy-type">
+          <option value="PROXY">PROXY (HTTP)</option>
+          <option value="SOCKS">SOCKS</option>
+          <option value="SOCKS4">SOCKS4</option>
+          <option value="SOCKS5">SOCKS5</option>
+          <option value="HTTPS">HTTPS</option>
+        </select>
+        <div class="field-label">Host</div>
+        <input type="text" id="proxy-host" placeholder="proxy.example.com">
+        <div class="field-label">Port</div>
+        <input type="text" id="proxy-port" placeholder="8080" value="8080">
+
+        <div class="field-label" style="margin-top:8px">Failover Proxies</div>
+        <div id="failover-list"></div>
+        <button class="add-failover" id="add-failover">+ Add failover proxy</button>
+
+        <div class="chk-row" style="margin-top:8px">
+          <input type="checkbox" id="direct-fallback" checked>
+          <label for="direct-fallback">Include DIRECT fallback</label>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">Quick Add</div>
+        <button class="quick-btn" data-type="plainHostname">Plain hostname bypass</button>
+        <button class="quick-btn" data-type="privateIpBypass">Private IP bypass</button>
+        <button class="quick-btn" data-type="localDomain">Local domain (.local)</button>
+        <button class="quick-btn" data-type="protocolBypass">FTP bypass</button>
+        <button class="quick-btn" data-type="idpBypass">IdP bypass (Okta)</button>
+        <button class="quick-btn" data-type="presetOsUpdates">OS Updates bypass</button>
+        <button class="quick-btn" data-type="presetConferencing">Conferencing bypass</button>
+        <button class="quick-btn" data-type="presetM365">M365 bypass</button>
+        <button class="quick-btn" data-type="presetCrl">CRL/OCSP bypass</button>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Content -->
+    <div class="content">
+
+      <!-- Input Mode Tabs -->
+      <div class="tabs" data-group="input">
+        <button class="tab active" data-target="builder">Builder</button>
+        <button class="tab" data-target="assistant">Assistant</button>
+      </div>
+
+      <div class="panels">
+
+        <!-- Input Panel -->
+        <div id="input-wrapper" style="flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:200px">
+
+          <!-- Builder Panel -->
+          <div class="panel active input-panel" data-group="input" data-panel="builder">
+            <div id="condition-list" class="condition-list"></div>
+            <div id="add-condition-area" style="margin-top:12px"></div>
+            <div style="margin-top:12px;display:flex;gap:8px">
+              <button class="btn primary" id="generate-btn">Generate PAC</button>
+            </div>
+          </div>
+
+          <!-- Assistant Panel -->
+          <div class="panel input-panel" data-group="input" data-panel="assistant" id="assistant-panel">
+          </div>
+
+        </div>
+
+        <!-- Resize Handle -->
+        <div class="resize-bar" id="resize-bar"></div>
+
+        <!-- Output Panel -->
+        <div id="output-wrapper" class="output-panel">
+
+          <!-- Output Tabs -->
+          <div class="tabs" data-group="output">
+            <button class="tab active" data-target="code">Code</button>
+            <button class="tab" data-target="validation">Validation</button>
+          </div>
+
+          <!-- Output Toolbar -->
+          <div class="output-toolbar">
+            <button class="btn sm" id="copy-btn">Copy</button>
+            <button class="btn sm" id="download-pac">Download .pac</button>
+            <button class="btn sm" id="download-wpad">Download wpad.dat</button>
+            <div class="spacer"></div>
+            <span class="copy-toast" id="copy-toast">Copied</span>
+          </div>
+
+          <!-- Code View -->
+          <div class="panel active" data-group="output" data-panel="code">
+            <div class="code-view" id="code-container">
+              <div class="empty-state">Add conditions and click Generate PAC</div>
+            </div>
+          </div>
+
+          <!-- Validation View -->
+          <div class="panel" data-group="output" data-panel="validation">
+            <div class="validation-view" id="validation-container">
+              <div class="empty-state">Validation results appear after generation</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Status Bar -->
+  <div class="statusbar">
+    <span class="status-item" id="status-conditions">0 conditions</span>
+    <span class="status-item" id="status-lines">not generated</span>
+    <span class="status-item" id="status-errors"></span>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+
+</body>
+</html>
