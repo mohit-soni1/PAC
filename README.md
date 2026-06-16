@@ -1,4 +1,4 @@
-# PAC Generator
+# PAC File Generator
 
 A browser-based tool for creating, validating, and downloading production-ready **Proxy Auto-Configuration (PAC)** files. No account required. All PAC logic runs entirely in the browser — the server only powers the plain-English assistant feature.
 
